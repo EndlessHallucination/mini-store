@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Environment variables (secrets: DB connection string, JWT secret)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+
+# Editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
