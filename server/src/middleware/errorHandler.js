@@ -4,7 +4,7 @@ export function errorHandler(error, req, res, next) {
   console.error(error);
 
   const status = Number.isInteger(error.status) && error.status >= 400 && error.status < 600 ? error.status : 500;
-  const message = status >= 500 ? "Something went wrong" : "Request failed";
+  const message = status >= 500 ? "Something went wrong" : error.isClientSafe ? error.message : "Request failed";
 
   res.status(status).json({ message });
 }
