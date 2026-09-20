@@ -1,13 +1,8 @@
 import mongoose from "mongoose";
 import Product from "../models/product.js";
+import { createHttpError } from "../utils.js";
 
 const PRODUCT_FIELDS = "name price description";
-
-function createHttpError(status) {
-  const error = new Error("Request failed");
-  error.status = status;
-  return error;
-}
 
 export async function createProduct({ name, price, description }) {
   try {
