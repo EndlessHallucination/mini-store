@@ -41,9 +41,13 @@ Create a folder when its first file is needed; empty folders are not committed.
 - Functional components with hooks only.
 - Use state only for values that change what is rendered; otherwise use a regular variable.
 - Declare state in the lowest component that needs it. State in a parent re-renders every child below it.
-- `useEffect` is only for syncing with something outside React, like fetching data when a component mounts.
-  Don't use it for values you can compute during render, or for reacting to user actions (use event handlers).
-/
+- `useEffect` is only for syncing with something outside React, like fetching data when a component mounts. Don't use it for values you can compute during render, or for reacting to user actions (use event handlers).
+
+## Async and errors
+
+- Use async/await, never callbacks.
+- Use try/catch in async handlers and pass errors to the central error middleware with `next(error)`.
+
 ## Styling
 
 - Tailwind classes only, no inline style={{}}, and no new .css files.
