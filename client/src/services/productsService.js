@@ -1,6 +1,5 @@
 import { ENDPOINTS } from "../endpoints";
-
-const GENERIC_ERROR_MESSAGE = "Something went wrong. Please try again later.";
+import { GENERIC_ERROR_MESSAGE } from "../utils";
 
 // Throws an Error whose message is safe to show: the server's text for 4xx, a generic one otherwise.
 export async function createProduct(product) {
