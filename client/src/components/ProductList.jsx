@@ -3,7 +3,8 @@ import { fetchProducts } from "../services/productsService";
 
 const priceFormatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
 
-export default function ProductList() {
+// Changing `refreshKey` makes the list fetch again.
+export default function ProductList({ refreshKey }) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -15,7 +16,10 @@ export default function ProductList() {
     async function loadProducts() {
       try {
         const data = await fetchProducts();
-        if (!isCancelled) setProducts(data);
+        if (!isCancelled) {
+          setProducts(data);
+          setIsError(false);
+        }
       } catch {
         if (!isCancelled) setIsError(true);
       } finally {
@@ -28,7 +32,7 @@ export default function ProductList() {
     return () => {
       isCancelled = true;
     };
-  }, []);
+  }, [refreshKey]);
 
   if (isLoading) return <p className="text-gray-500">Loading products...</p>;
   if (isError) {

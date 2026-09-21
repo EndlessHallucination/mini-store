@@ -10,7 +10,15 @@ export async function createProduct({ name, price, description }) {
     return { _id: product._id, name: product.name, price: product.price, description: product.description };
   } catch (error) {
     // Invalid input is the client's fault (400), not a server error (500).
-    if (error.name === "ValidationError") throw createHttpError(400);
+    // The messages come from the model rules, e.g. "Name is required, Price must be positive".
+    if (error.name === "ValidationError") {
+      throw createHttpError(
+        400,
+        Object.values(error.errors)
+          .map((fieldError) => fieldError.message)
+          .join(", ")
+      );
+    }
     throw error;
   }
 }
