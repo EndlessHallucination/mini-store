@@ -12,16 +12,18 @@ export default function ProductList() {
     // Ignore the result if the component unmounted before the request finished.
     let isCancelled = false;
 
-    fetchProducts()
-      .then((data) => {
+    async function loadProducts() {
+      try {
+        const data = await fetchProducts();
         if (!isCancelled) setProducts(data);
-      })
-      .catch(() => {
+      } catch {
         if (!isCancelled) setIsError(true);
-      })
-      .finally(() => {
+      } finally {
         if (!isCancelled) setIsLoading(false);
-      });
+      }
+    }
+
+    loadProducts();
 
     return () => {
       isCancelled = true;
