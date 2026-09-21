@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { deleteProduct, fetchProducts } from "../services/productsService";
-
-const priceFormatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
+import { formatPrice } from "../utils";
 
 // Changing `refreshKey` makes the list fetch again.
-export default function ProductList({ refreshKey }) {
+export default function ProductList({ refreshKey, isCheckingOut, onAddToCart }) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -75,7 +74,15 @@ export default function ProductList({ refreshKey }) {
           return (
             <li key={product._id} className="flex items-center justify-between gap-4 px-4 py-3">
               <span className="font-medium">{product.name}</span>
-              <span className="ml-auto text-gray-700">{priceFormatter.format(product.price)}</span>
+              <span className="ml-auto text-gray-700">{formatPrice(product.price)}</span>
+              <button
+                type="button"
+                onClick={() => onAddToCart(product)}
+                disabled={isCheckingOut}
+                className="rounded-md bg-blue-600 px-3 py-1 text-white disabled:opacity-50"
+              >
+                Add to cart
+              </button>
               <button
                 type="button"
                 onClick={() => handleDelete(product)}
